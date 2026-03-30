@@ -27,7 +27,7 @@ SPEED_INDEX = {"slow": 0, "medium": 1, "fast": 2}
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Windows launcher for LEKIWI manual control.")
+    parser = argparse.ArgumentParser(description="Launcher for LEKIWI manual control.")
     parser.add_argument("--robot-ip", default=os.environ.get("LEKIWI_REMOTE_IP", "10.42.0.1"))
     parser.add_argument("--robot-id", default=os.environ.get("LEKIWI_ROBOT_ID", "follow-mobile"))
     parser.add_argument("--leader-id", default=os.environ.get("LEKIWI_LEADER_ID", "leader"))
@@ -74,7 +74,7 @@ def main() -> int:
             raise RuntimeError("Robot, leader arm, or keyboard listener failed to connect.")
 
         print("Manual control started.")
-        print("W/A/S/D move, Z/X rotate, R/F change speed, Q quits.")
+        print("W/A/S/D move, Q/E rotate, R/F change speed, P quits.")
 
         while True:
             t0 = time.perf_counter()

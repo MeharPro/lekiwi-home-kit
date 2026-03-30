@@ -6,8 +6,31 @@ It does not change your original local code. Instead, it ships:
 
 - a clean vendored snapshot of the current `lerobot` source under `vendor/lerobot`
 - bundled leader calibration files under `assets/calibration/`
+- Mac setup and launcher scripts under `mac/`
 - Windows setup and launcher scripts under `windows/`
 - standalone wrapper scripts under `scripts/`
+
+The repo now carries a full vendored copy of `lerobot`, not just a minimal subset.
+
+## Mac Quick Start
+
+1. Download or clone this repo on the Mac laptop.
+2. Plug in the SO-100 leader arm by USB.
+3. Make sure the Mac can reach the Pi over the same network. The default robot IP in the launcher is `10.42.0.1`.
+4. Run:
+
+```bash
+chmod +x ./mac/*.sh
+./mac/Setup-Mac.sh
+./mac/Start-Manual-Control.sh
+```
+
+If auto-detection picks the wrong serial port:
+
+```bash
+export LEKIWI_LEADER_PORT=/dev/tty.usbmodem5AE60840411
+./mac/Start-Manual-Control.sh
+```
 
 ## Windows Quick Start
 
@@ -59,6 +82,33 @@ Calibrate the leader:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\windows\Calibrate-Leader.ps1
+```
+
+## Mac Commands
+
+Setup:
+
+```bash
+chmod +x ./mac/*.sh
+./mac/Setup-Mac.sh
+```
+
+Start manual control:
+
+```bash
+./mac/Start-Manual-Control.sh
+```
+
+Start manual control with an explicit IP and serial port:
+
+```bash
+LEKIWI_REMOTE_IP=10.42.0.1 LEKIWI_LEADER_PORT=/dev/tty.usbmodem5AE60840411 ./mac/Start-Manual-Control.sh
+```
+
+Calibrate the leader:
+
+```bash
+./mac/Calibrate-Leader.sh
 ```
 
 ## OPTIMIZED MANUAL CONTROL
@@ -179,7 +229,9 @@ lerobot-calibrate \
 ## Notes
 
 - The Windows launcher starts in the fast LEKIWI speed tier automatically.
+- The Mac and Windows launchers both use `Q/E` for rotation, `R/F` for speed changes, and `P` to quit.
 - The Windows launcher keeps robot cameras disabled by default, matching your manual Pi host usage.
+- The Mac launcher uses the same wrapper and bundled calibration install flow as the Windows package.
 - The package includes your cached SO-100 leader calibration files for `leader` and `lead`.
 - The default launcher uses teleoperator id `leader`, so it will use `assets/calibration/teleoperators/so_leader/leader.json` after setup copies it into the cache.
 - If the Pi is not reachable at `10.42.0.1`, pass the correct address with `-RobotIp`.
