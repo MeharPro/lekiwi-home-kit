@@ -49,6 +49,14 @@ Write-Host "Upgrading pip..."
 Write-Host "Installing vendored LeRobot with LEKIWI dependencies..."
 & $CondaExe run --no-capture-output -n $EnvName python -m pip install -e "$RepoRoot\vendor\lerobot[lekiwi]"
 
+$CalibrationSrc = Join-Path $RepoRoot "assets\calibration"
+$CalibrationDst = Join-Path $env:USERPROFILE ".cache\huggingface\lerobot\calibration"
+if (Test-Path $CalibrationSrc) {
+    New-Item -ItemType Directory -Force -Path $CalibrationDst | Out-Null
+    Copy-Item -Path (Join-Path $CalibrationSrc "*") -Destination $CalibrationDst -Recurse -Force
+    Write-Host "Installed bundled calibration files to $CalibrationDst"
+}
+
 Write-Host
 Write-Host "Setup complete."
 Write-Host "Start manual control with:"

@@ -5,6 +5,7 @@ This repo is a plug-and-play handoff package for the SO-100 leader arm and LEKIW
 It does not change your original local code. Instead, it ships:
 
 - a clean vendored snapshot of the current `lerobot` source under `vendor/lerobot`
+- bundled leader calibration files under `assets/calibration/`
 - Windows setup and launcher scripts under `windows/`
 - standalone wrapper scripts under `scripts/`
 
@@ -15,6 +16,8 @@ It does not change your original local code. Instead, it ships:
 3. Make sure the Windows laptop can reach the Pi over the same network. The default robot IP in the launcher is `10.42.0.1`.
 4. Double-click `windows/Setup-Windows.bat`.
 5. Double-click `windows/Start-Manual-Control.bat`.
+
+`Setup-Windows.bat` now installs the bundled SO-100 leader calibration into the Windows Hugging Face cache automatically, so the default `leader` teleoperator id matches your existing setup.
 
 If auto-detection picks the wrong serial port, double-click `windows/List-Leader-Ports.bat` and then run:
 
@@ -177,5 +180,7 @@ lerobot-calibrate \
 
 - The Windows launcher starts in the fast LEKIWI speed tier automatically.
 - The Windows launcher keeps robot cameras disabled by default, matching your manual Pi host usage.
+- The package includes your cached SO-100 leader calibration files for `leader` and `lead`.
+- The default launcher uses teleoperator id `leader`, so it will use `assets/calibration/teleoperators/so_leader/leader.json` after setup copies it into the cache.
 - If the Pi is not reachable at `10.42.0.1`, pass the correct address with `-RobotIp`.
 - Vendored `lerobot` code remains under its original Apache 2.0 license in `vendor/lerobot`.
